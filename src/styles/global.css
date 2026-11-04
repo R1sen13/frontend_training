@@ -41,7 +41,7 @@ div {
   text-align: center;
 }
 
-input {
+.Input {
   width: 60%;
   margin: 20px auto;
   height: 20px;
@@ -49,6 +49,6 @@ input {
   border-radius: 12px;
 }
 
-input:focus {
+.Input:focus {
   outline: none;
 }

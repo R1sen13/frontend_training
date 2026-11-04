@@ -1,7 +1,8 @@
 import Button from './Button.tsx';
-import type { TaskListProps, TaskState } from '../entities/Tasks/tasks.types.ts';
+import type { TaskListProps, TaskState } from '../entities/Tasks/task.types.ts';
 import { Fragment, useState } from 'react';
 import TaskCard from './TaskCard.tsx';
+import Input from './Input.tsx';
 
 function TaskList(props: TaskListProps) {
   const [newTask, setNewTask] = useState<string>('');
@@ -35,6 +36,7 @@ function TaskList(props: TaskListProps) {
     if (!name.trim() || name.trim().length === 0) {
       setError('Cannot edit task with empty name');
       setNewTaskName('');
+      setEditingTaskId(null);
       return;
     }
     props.setTasks(
@@ -44,6 +46,7 @@ function TaskList(props: TaskListProps) {
     );
     setError('');
     setNewTaskName('');
+    setEditingTaskId(null);
   }
 
   return (
@@ -54,13 +57,11 @@ function TaskList(props: TaskListProps) {
           <TaskCard name={task.name} completed={task.completed}></TaskCard>
           {editingTaskId === task.id ? (
             <div>
-              <input value={newTaskName} onChange={(e) => setNewTaskName(e.target.value)} />
+              <Input value={newTaskName} onChange={(event) => setNewTaskName(event.target.value)} />
               <Button
                 text={'Save'}
                 onClick={() => {
                   editTask(task.id, newTaskName);
-                  setEditingTaskId(null);
-                  setNewTaskName('');
                 }}
               />
             </div>
@@ -77,13 +78,13 @@ function TaskList(props: TaskListProps) {
           <Button text={'Delete'} onClick={() => deleteTask(task.id)}></Button>
         </Fragment>
       ))}
-      <input
+      <Input
         value={newTask}
         onChange={(event) => {
           setNewTask(event.target.value);
           setError('');
         }}
-      ></input>
+      ></Input>
       <Button
         text={'Add'}
         onClick={() =>
