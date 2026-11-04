@@ -1,8 +1,13 @@
+import { useState } from 'react';
+import TaskList from './components/TaskList.tsx';
+import type { TaskListState } from './entities/Tasks/tasks.types.ts';
+
 function App() {
+  const [tasks, setTasks] = useState<TaskListState>([]);
+
   return (
     <main className="App">
-      <h1>App Component</h1>
-      <h2>Projects</h2>
+      <TaskList tasks={tasks} setTasks={setTasks}></TaskList>
     </main>
   );
 }
