@@ -1,0 +1,27 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+body {
+  margin: 0;
+}
+
+.App {
+  width: min(100% - 32px, 720px);
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.TaskList {
+  display: grid;
+  gap: 16px;
+}
+
+.TaskCard {
+  padding: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: white;
+}
