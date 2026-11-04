@@ -25,3 +25,30 @@ body {
   border-radius: 12px;
   background: white;
 }
+
+.Button {
+  background: #d1d5db;
+  color: black;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.Button:hover {
+  background: #f7f8ff;
+}
+
+div {
+  text-align: center;
+}
+
+input {
+  width: 60%;
+  margin: 20px auto;
+  height: 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+}
+
+input:focus {
+  outline: none;
+}
