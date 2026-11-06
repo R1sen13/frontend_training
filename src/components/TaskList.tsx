@@ -55,46 +55,60 @@ function TaskList(props: TaskListProps) {
       {props.tasks.map((task) => (
         <Fragment key={task.id}>
           <TaskCard name={task.name} completed={task.completed}></TaskCard>
-          {editingTaskId === task.id ? (
-            <div>
-              <Input value={newTaskName} onChange={(event) => setNewTaskName(event.target.value)} />
+          <div className="TaskAction">
+            {editingTaskId === task.id ? (
+              <div>
+                <Input
+                  value={newTaskName}
+                  onChange={(event) => setNewTaskName(event.target.value)}
+                />
+                <Button
+                  variant="secondary"
+                  text={'Save'}
+                  onClick={() => {
+                    editTask(task.id, newTaskName);
+                  }}
+                />
+              </div>
+            ) : (
               <Button
-                text={'Save'}
+                variant="secondary"
+                text={'Edit'}
                 onClick={() => {
-                  editTask(task.id, newTaskName);
+                  setEditingTaskId(task.id);
+                  setNewTaskName('');
                 }}
-              />
-            </div>
-          ) : (
+              ></Button>
+            )}
             <Button
-              text={'Edit'}
-              onClick={() => {
-                setEditingTaskId(task.id);
-                setNewTaskName('');
-              }}
+              variant="primary"
+              text={'Complete'}
+              onClick={() => completeTask(task.id)}
             ></Button>
-          )}
-          <Button text={'Complete'} onClick={() => completeTask(task.id)}></Button>
-          <Button text={'Delete'} onClick={() => deleteTask(task.id)}></Button>
+            <Button variant="danger" text={'Delete'} onClick={() => deleteTask(task.id)}></Button>
+          </div>
         </Fragment>
       ))}
-      <Input
-        value={newTask}
-        onChange={(event) => {
-          setNewTask(event.target.value);
-          setError('');
-        }}
-      ></Input>
-      <Button
-        text={'Add'}
-        onClick={() =>
-          addTask({
-            id: props.tasks.length + 1,
-            name: newTask,
-            completed: false,
-          })
-        }
-      ></Button>
+      <div className="TaskAdd">
+        <Input
+          value={newTask}
+          onChange={(event) => {
+            setNewTask(event.target.value);
+            setError('');
+          }}
+        ></Input>
+        <Button
+          variant={'primary'}
+          text={'Add'}
+          onClick={() =>
+            addTask({
+              id: props.tasks.length + 1,
+              name: newTask,
+              completed: false,
+            })
+          }
+        ></Button>
+      </div>
       {error ? <div>{error}</div> : null}
     </div>
   );
