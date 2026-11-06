@@ -54,6 +54,10 @@ body {
   margin: 0px 0;
 }
 
+.TaskAction Input {
+  width: 40%;
+}
+
 .Button {
   cursor: pointer;
   background: var(--background);

@@ -1,4 +1,4 @@
-import type { ButtonProps } from '../entities/Button/button.types.ts';
+import type { ButtonProps } from '../types/button.types.ts';
 
 function Button(props: ButtonProps) {
   return (

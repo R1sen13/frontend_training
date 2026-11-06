@@ -1,4 +1,4 @@
-import type { InputProps } from '../entities/Input/input.types.ts';
+import type { InputProps } from '../types/input.types.ts';
 
 function Input(props: InputProps) {
   return (
@@ -6,6 +6,7 @@ function Input(props: InputProps) {
       type={props.type}
       value={props.value}
       onChange={props.onChange}
+      onKeyDown={props.onKeyDown}
       className="Input"
     ></input>
   );
