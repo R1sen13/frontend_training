@@ -1,5 +1,5 @@
 import Button from './Button.tsx';
-import type { TaskListProps, TaskState } from '../types/task.types.ts';
+import type { TaskState } from '../types/task.types.ts';
 import { Fragment, type KeyboardEvent, useState } from 'react';
 import TaskCard from './TaskCard.tsx';
 import Input from './Input.tsx';
@@ -7,8 +7,8 @@ import type { FilterState } from '../types/filter.types.ts';
 import { Filter } from './Filter.tsx';
 import { useTasks } from '../hooks/useTasks.ts';
 
-function TaskList(props: TaskListProps) {
-  const { tasks, addTask, deleteTask, completeTask, editTask } = useTasks(props.tasks);
+function TaskList() {
+  const { tasks, addTask, deleteTask, completeTask, editTask } = useTasks();
   const [newTask, setNewTask] = useState<string>('');
   const [newTaskName, setNewTaskName] = useState<string>('');
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);

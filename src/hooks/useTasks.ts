@@ -1,7 +1,7 @@
 import type { TaskListState, TaskState } from '../types/task.types.ts';
 import { useState } from 'react';
 
-export function useTasks(initialTasks: TaskListState) {
+export function useTasks(initialTasks: TaskListState = []) {
   const [tasks, setTasks] = useState<TaskListState>(initialTasks);
 
   function addTask(task: TaskState) {
