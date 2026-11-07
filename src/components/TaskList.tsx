@@ -67,10 +67,10 @@ function TaskList() {
   }
 
   const visibleTasks = tasks.filter((task) => {
-    if (filter == 'Active') {
+    if (filter === 'Active') {
       return !task.completed;
     }
-    if (filter == 'Completed') {
+    if (filter === 'Completed') {
       return task.completed;
     }
     return true;
