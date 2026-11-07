@@ -1,10 +1,13 @@
-import TaskList from '../components/TaskList.tsx';
+import { AppRouter } from './router.tsx';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <main className="App">
-      <TaskList></TaskList>
-    </main>
+    <BrowserRouter>
+      <main className="App">
+        <AppRouter />
+      </main>
+    </BrowserRouter>
   );
 }
 

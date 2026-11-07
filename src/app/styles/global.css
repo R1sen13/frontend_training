@@ -104,3 +104,9 @@ body {
 .ErrorMessage {
   color: #f82525;
 }
+
+.Link {
+  cursor: pointer;
+  margin: 20px auto;
+  gap: 10px;
+}
