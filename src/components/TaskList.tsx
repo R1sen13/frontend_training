@@ -52,7 +52,6 @@ function TaskList() {
     if (!name.trim() || name.trim().length === 0) {
       setError('Cannot edit task with empty name');
       setNewTaskName('');
-      setEditingTaskId(null);
       return;
     }
     editTask(taskId, name);
