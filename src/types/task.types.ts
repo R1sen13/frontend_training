@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 export type TaskState = {
   id: number;
   name: string;
@@ -7,8 +5,3 @@ export type TaskState = {
 };
 
 export type TaskListState = TaskState[];
-
-export type TaskListProps = {
-  tasks: TaskListState;
-  setTasks: React.Dispatch<React.SetStateAction<TaskListState>>;
-};

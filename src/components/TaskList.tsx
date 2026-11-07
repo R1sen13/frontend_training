@@ -9,7 +9,7 @@ import { useTasks } from '../hooks/useTasks.ts';
 import { Panel } from './Panel.tsx';
 
 function TaskList() {
-  const { tasks, addTask, deleteTask, completeTask, editTask } = useTasks();
+  const { tasks, addTask, deleteTask, completeTask, editTask, taskError, isLoading } = useTasks();
   const [newTask, setNewTask] = useState<string>('');
   const [newTaskName, setNewTaskName] = useState<string>('');
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
@@ -82,6 +82,10 @@ function TaskList() {
     }
   }
 
+  if (taskError) {
+    setError(taskError);
+  }
+
   return (
     <div className="TaskList">
       <Panel>
@@ -90,7 +94,9 @@ function TaskList() {
       </Panel>
 
       <Panel>
-        {!(visibleTasks.length > 0) ? (
+        {isLoading ? (
+          <div className="LoadingTasks">Tasks are loading...</div>
+        ) : !(visibleTasks.length > 0) ? (
           <div>No tasks</div>
         ) : (
           visibleTasks.map((task) => (

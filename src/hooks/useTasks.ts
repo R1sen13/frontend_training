@@ -1,8 +1,27 @@
 import type { TaskListState, TaskState } from '../types/task.types.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getTasks } from '../api/tasks.api.ts';
 
-export function useTasks(initialTasks: TaskListState = []) {
-  const [tasks, setTasks] = useState<TaskListState>(initialTasks);
+export function useTasks() {
+  const [taskError, setTaskError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [tasks, setTasks] = useState<TaskListState>([]);
+
+  useEffect(() => {
+    async function loadTasks() {
+      try {
+        setIsLoading(true);
+        const tasks = await getTasks();
+        setTasks(tasks);
+      } catch {
+        setTaskError('Fail in loading tasks.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadTasks();
+  }, []);
 
   function addTask(task: TaskState) {
     setTasks((currentTasks) => [...currentTasks, task]);
@@ -34,5 +53,7 @@ export function useTasks(initialTasks: TaskListState = []) {
     deleteTask,
     completeTask,
     editTask,
+    taskError,
+    isLoading,
   };
 }
