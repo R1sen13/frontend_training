@@ -23,13 +23,11 @@ body {
 .TaskList {
   box-sizing: border-box;
   gap: 16px;
-  border: var(--border-color) 1px solid;
   display: grid;
 }
 
 .TaskCard {
   width: 50%;
-  height: 60%;
   margin: 20px auto;
   padding: 8px;
   border: 1px solid var(--border-color);
@@ -54,7 +52,7 @@ body {
   margin: 0px 0;
 }
 
-.TaskAction Input {
+.TaskAction .Input {
   width: 40%;
 }
 
@@ -62,7 +60,6 @@ body {
   cursor: pointer;
   background: var(--background);
   color: black;
-  width: 20%;
   margin: 20px 10px;
   font-size: 120%;
   padding: 16px;
@@ -95,4 +92,11 @@ body {
 
 .TaskAdd {
   display: inline-block;
+}
+
+.Panel {
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: white;
 }

@@ -6,6 +6,7 @@ import Input from './Input.tsx';
 import type { FilterState } from '../types/filter.types.ts';
 import { Filter } from './Filter.tsx';
 import { useTasks } from '../hooks/useTasks.ts';
+import { Panel } from './Panel.tsx';
 
 function TaskList() {
   const { tasks, addTask, deleteTask, completeTask, editTask } = useTasks();
@@ -84,56 +85,69 @@ function TaskList() {
 
   return (
     <div className="TaskList">
-      <h1>Current TaskList</h1>
-      <Filter filter={filter} setFilter={setFilter}></Filter>
-      {!(visibleTasks.length > 0) ? (
-        <div>No tasks</div>
-      ) : (
-        visibleTasks.map((task) => (
-          <Fragment key={task.id}>
-            <TaskCard name={task.name} completed={task.completed}></TaskCard>
-            <div className="TaskAction">
-              {editingTaskId === task.id ? (
-                <form onSubmit={(event) => handleEdit(event, task.id)} onReset={handleReset}>
-                  <Button variant="danger" text={'Cancel'} type={'reset'} />
-                  <Input
-                    value={newTaskName}
-                    onChange={(event) => setNewTaskName(event.target.value)}
-                    onKeyDown={(event) => handleKeyDown(event)}
-                  />
-                  <Button variant="secondary" text={'Save'} type={'submit'} />
-                </form>
-              ) : (
+      <Panel>
+        <h1>Current TaskList</h1>
+        <Filter filter={filter} setFilter={setFilter}></Filter>
+      </Panel>
+
+      <Panel>
+        {!(visibleTasks.length > 0) ? (
+          <div>No tasks</div>
+        ) : (
+          visibleTasks.map((task) => (
+            <Fragment key={task.id}>
+              <TaskCard name={task.name} completed={task.completed}></TaskCard>
+              <div className="TaskAction">
+                {editingTaskId === task.id ? (
+                  <form onSubmit={(event) => handleEdit(event, task.id)} onReset={handleReset}>
+                    <Button variant="danger" text={'Cancel'} type={'reset'} />
+                    <Input
+                      value={newTaskName}
+                      onChange={(event) => setNewTaskName(event.target.value)}
+                      onKeyDown={(event) => handleKeyDown(event)}
+                    />
+                    <Button variant="secondary" text={'Save'} type={'submit'} />
+                  </form>
+                ) : (
+                  <Button
+                    variant="secondary"
+                    text={'Edit'}
+                    onClick={() => {
+                      setEditingTaskId(task.id);
+                      setNewTaskName(task.name);
+                    }}
+                  ></Button>
+                )}
                 <Button
-                  variant="secondary"
-                  text={'Edit'}
-                  onClick={() => {
-                    setEditingTaskId(task.id);
-                    setNewTaskName(task.name);
-                  }}
+                  variant="primary"
+                  text={'Complete'}
+                  onClick={() => completeTask(task.id)}
                 ></Button>
-              )}
-              <Button
-                variant="primary"
-                text={'Complete'}
-                onClick={() => completeTask(task.id)}
-              ></Button>
-              <Button variant="danger" text={'Delete'} onClick={() => deleteTask(task.id)}></Button>
-            </div>
-          </Fragment>
-        ))
-      )}
-      <form className="TaskAdd" onSubmit={handleAdd}>
-        <Input
-          value={newTask}
-          onChange={(event) => {
-            setNewTask(event.target.value);
-            setError('');
-          }}
-        ></Input>
-        <Button variant={'primary'} text={'Add'} type={'submit'}></Button>
-      </form>
-      {error ? <div>{error}</div> : null}
+                <Button
+                  variant="danger"
+                  text={'Delete'}
+                  onClick={() => deleteTask(task.id)}
+                ></Button>
+              </div>
+            </Fragment>
+          ))
+        )}
+      </Panel>
+
+      <Panel>
+        <form className="TaskAdd" onSubmit={handleAdd}>
+          <Input
+            value={newTask}
+            onChange={(event) => {
+              setNewTask(event.target.value);
+              setError('');
+            }}
+          ></Input>
+          <Button variant={'primary'} text={'Add'} type={'submit'}></Button>
+        </form>
+      </Panel>
+
+      {error ? <div>{'Error: ' + error}</div> : null}
     </div>
   );
 }
