@@ -1,5 +1,10 @@
 export type TaskState = {
-  id: number;
+  id: string;
+  name: string;
+  completed: boolean;
+};
+
+export type TaskStateCreate = {
   name: string;
   completed: boolean;
 };

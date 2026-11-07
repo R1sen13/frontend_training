@@ -1,5 +1,5 @@
 import Button from './Button.tsx';
-import type { TaskState } from '../types/task.types.ts';
+import type { TaskStateCreate } from '../types/task.types.ts';
 import { type FormEvent, Fragment, type KeyboardEvent, useState } from 'react';
 import TaskCard from './TaskCard.tsx';
 import Input from './Input.tsx';
@@ -12,11 +12,11 @@ function TaskList() {
   const { tasks, addTask, deleteTask, completeTask, editTask, taskError, isLoading } = useTasks();
   const [newTask, setNewTask] = useState<string>('');
   const [newTaskName, setNewTaskName] = useState<string>('');
-  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
   const [error, setError] = useState<string>('');
   const [filter, setFilter] = useState<FilterState>('All');
 
-  function add(task: TaskState) {
+  function add(task: TaskStateCreate) {
     if (!newTask.trim() || newTask.trim().length === 0) {
       setError('Cannot add task with empty name');
       return;
@@ -30,13 +30,12 @@ function TaskList() {
     event.preventDefault();
 
     add({
-      id: Date.now(),
       name: newTask,
       completed: false,
     });
   }
 
-  function handleEdit(event: FormEvent<HTMLFormElement>, taskId: number) {
+  function handleEdit(event: FormEvent<HTMLFormElement>, taskId: string) {
     event.preventDefault();
 
     edit(taskId, newTaskName);
@@ -48,7 +47,7 @@ function TaskList() {
     cancelEditionTask();
   }
 
-  function edit(taskId: number, name: string) {
+  function edit(taskId: string, name: string) {
     if (!name.trim() || name.trim().length === 0) {
       setError('Cannot edit task with empty name');
       setNewTaskName('');
