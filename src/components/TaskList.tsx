@@ -82,9 +82,7 @@ function TaskList() {
     }
   }
 
-  if (taskError) {
-    setError(taskError);
-  }
+  const displayedError = taskError ?? error;
 
   return (
     <div className="TaskList">
@@ -152,7 +150,7 @@ function TaskList() {
         </form>
       </Panel>
 
-      {error ? <div className="ErrorMessage">{'Error: ' + error}</div> : null}
+      {error ? <div className="ErrorMessage">{'Error: ' + displayedError}</div> : null}
     </div>
   );
 }
