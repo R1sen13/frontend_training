@@ -5,24 +5,24 @@ export function useTasks(initialTasks: TaskListState = []) {
   const [tasks, setTasks] = useState<TaskListState>(initialTasks);
 
   function addTask(task: TaskState) {
-    setTasks([...tasks, task]);
+    setTasks((currentTasks) => [...currentTasks, task]);
   }
 
   function deleteTask(taskId: number) {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+    setTasks((currentTasks) => currentTasks.filter((task) => task.id !== taskId));
   }
 
   function completeTask(taskId: number) {
-    setTasks(
-      tasks.map((task) => {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) => {
         return taskId === task.id ? { ...task, completed: !task.completed } : task;
       }),
     );
   }
 
   function editTask(taskId: number, name: string) {
-    setTasks(
-      tasks.map((task) => {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) => {
         return taskId === task.id ? { ...task, name } : task;
       }),
     );

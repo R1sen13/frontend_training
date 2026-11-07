@@ -1,6 +1,6 @@
 import Button from './Button.tsx';
 import type { TaskState } from '../types/task.types.ts';
-import { Fragment, type KeyboardEvent, useState } from 'react';
+import { type FormEvent, Fragment, type KeyboardEvent, useState } from 'react';
 import TaskCard from './TaskCard.tsx';
 import Input from './Input.tsx';
 import type { FilterState } from '../types/filter.types.ts';
@@ -23,6 +23,28 @@ function TaskList() {
     addTask(task);
     setError('');
     setNewTask('');
+  }
+
+  function handleAdd(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    add({
+      id: Date.now(),
+      name: newTask,
+      completed: false,
+    });
+  }
+
+  function handleEdit(event: FormEvent<HTMLFormElement>, taskId: number) {
+    event.preventDefault();
+
+    edit(taskId, newTaskName);
+  }
+
+  function handleReset(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    cancelEditionTask();
   }
 
   function edit(taskId: number, name: string) {
@@ -54,10 +76,7 @@ function TaskList() {
     return true;
   });
 
-  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>, taskId: number) {
-    if (event.key === 'Enter') {
-      edit(taskId, newTaskName);
-    }
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Escape') {
       cancelEditionTask();
     }
@@ -75,34 +94,22 @@ function TaskList() {
             <TaskCard name={task.name} completed={task.completed}></TaskCard>
             <div className="TaskAction">
               {editingTaskId === task.id ? (
-                <div>
-                  <Button
-                    variant="danger"
-                    text={'Cancel'}
-                    onClick={() => {
-                      cancelEditionTask();
-                    }}
-                  />
+                <form onSubmit={(event) => handleEdit(event, task.id)} onReset={handleReset}>
+                  <Button variant="danger" text={'Cancel'} type={'reset'} />
                   <Input
                     value={newTaskName}
                     onChange={(event) => setNewTaskName(event.target.value)}
-                    onKeyDown={(event) => handleKeyDown(event, task.id)}
+                    onKeyDown={(event) => handleKeyDown(event)}
                   />
-                  <Button
-                    variant="secondary"
-                    text={'Save'}
-                    onClick={() => {
-                      edit(task.id, newTaskName);
-                    }}
-                  />
-                </div>
+                  <Button variant="secondary" text={'Save'} type={'submit'} />
+                </form>
               ) : (
                 <Button
                   variant="secondary"
                   text={'Edit'}
                   onClick={() => {
                     setEditingTaskId(task.id);
-                    setNewTaskName('');
+                    setNewTaskName(task.name);
                   }}
                 ></Button>
               )}
@@ -116,7 +123,7 @@ function TaskList() {
           </Fragment>
         ))
       )}
-      <div className="TaskAdd">
+      <form className="TaskAdd" onSubmit={handleAdd}>
         <Input
           value={newTask}
           onChange={(event) => {
@@ -124,18 +131,8 @@ function TaskList() {
             setError('');
           }}
         ></Input>
-        <Button
-          variant={'primary'}
-          text={'Add'}
-          onClick={() =>
-            add({
-              id: Date.now(),
-              name: newTask,
-              completed: false,
-            })
-          }
-        ></Button>
-      </div>
+        <Button variant={'primary'} text={'Add'} type={'submit'}></Button>
+      </form>
       {error ? <div>{error}</div> : null}
     </div>
   );
