@@ -150,7 +150,7 @@ function TaskList() {
         </form>
       </Panel>
 
-      {error ? <div className="ErrorMessage">{'Error: ' + displayedError}</div> : null}
+      {displayedError ? <div className="ErrorMessage">{'Error: ' + displayedError}</div> : null}
     </div>
   );
 }
